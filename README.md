@@ -245,3 +245,11 @@ npm run watch   # rebuilds on every change
 ## License
 
 YTBUFFY is released under the [GNU Affero General Public License v3.0](LICENSE).
+
+
+## Disclaimer
+
+This software is provided "as is", without warranty of any kind, express or implied.
+- **Educational & Research Use:** This project is intended solely for educational purposes, personal experimentation, and understanding browser extension architecture.
+- **Compliance:** The author does not endorse or encourage any violation of third-party terms of service, platform guidelines, or copyright policies. Users are entirely responsible for their own use of this software.
+- **Limitation of Liability:** In no event shall the author be held liable for any claims, damages, or liabilities arising from the use or distribution of this software.
