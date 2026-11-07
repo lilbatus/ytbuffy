@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/social-preview.png" alt="YTBUFFY" width="720">
+  <img src="assets/social-preview.png" alt="YTBUFFY" width="720">
 </p>
 
 <p align="center"><b>English</b> · <a href="README.tr.md">Türkçe</a></p>
@@ -244,4 +244,4 @@ npm run watch   # rebuilds on every change
 
 ## License
 
-See [LICENSE](LICENSE).
+YTBUFFY is released under the [GNU Affero General Public License v3.0](LICENSE).
