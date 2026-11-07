@@ -1,0 +1,69 @@
+.ytl-root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  font-family: "YouTube Sans", Roboto, Arial, sans-serif;
+}
+
+.ytl-badge {
+  position: absolute;
+  right: 12px;
+  bottom: 72px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #e8e8e8;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.ytl-badge.ytl-visible {
+  opacity: 1;
+}
+
+.ytp-autohide .ytl-badge.ytl-visible {
+  opacity: 0;
+}
+
+.ytl-toasts {
+  position: absolute;
+  left: 12px;
+  bottom: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.ytl-toast {
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #e8e8e8;
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.ytl-toast.ytl-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.ytl-progress {
+  position: absolute;
+  inset: 0;
+  z-index: 33;
+  pointer-events: none;
+}
+
+.ytl-progress > div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  opacity: 0.85;
+}
