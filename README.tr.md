@@ -21,7 +21,20 @@ YouTube oynatıcısı yalnızca iki üç dakika ilerisini yükler; bağlantısı
 
 ## Kurulum
 
-YTBUFFY Chrome Web Mağazası'nda yok; paketlenmemiş eklenti olarak yüklenir. Derlemek için [Node.js](https://nodejs.org) 20 veya daha yeni bir sürüm gerekir.
+YTBUFFY Chrome Web Mağazası'nda yok; paketlenmemiş eklenti olarak yüklenir.
+
+### Hazır sürümden
+
+1. [Releases](https://github.com/lilbatus/ytbuffy/releases) sayfasından en son `ytbuffy-vX.Y.Z.zip` dosyasını indir ve bir klasöre çıkar.
+2. `chrome://extensions` sayfasını aç ve sağ üstteki **Geliştirici modu**nu aç.
+3. **Paketlenmemiş öğe yükle**'ye tıkla ve çıkardığın klasörü seç.
+4. Açık olan YouTube sekmelerini yenile.
+
+Güncellemek için yeni sürümü aynı klasöre, eski dosyaların üzerine çıkar ve eklentinin kartındaki yenile simgesine bas. Klasörün yerini değiştirmezsen ayarların korunur.
+
+### Kaynaktan derleyerek
+
+[Node.js](https://nodejs.org) 20 veya daha yeni bir sürüm gerekir.
 
 ```bash
 git clone https://github.com/lilbatus/ytbuffy.git
@@ -30,11 +43,7 @@ npm install
 npm run build
 ```
 
-1. `chrome://extensions` sayfasını aç ve sağ üstteki **Geliştirici modu**nu aç.
-2. **Paketlenmemiş öğe yükle**'ye tıkla ve `dist` klasörünü seç.
-3. Açık olan YouTube sekmelerini yenile.
-
-Daha sonra güncellemek için son değişiklikleri çek, `npm run build` komutunu yeniden çalıştır ve eklentinin kartındaki yenile simgesine bas.
+Sonra `dist` klasörünü aynı şekilde yükle. Güncellemek için son değişiklikleri çek, `npm run build` komutunu yeniden çalıştır ve yenile simgesine bas.
 
 ## Kullanım
 

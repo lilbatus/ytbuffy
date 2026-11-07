@@ -21,7 +21,20 @@ YouTube's player only buffers two or three minutes ahead, which is not enough to
 
 ## Installation
 
-YTBUFFY is not on the Chrome Web Store, so you load it as an unpacked extension. You need [Node.js](https://nodejs.org) 20 or later to build it.
+YTBUFFY is not on the Chrome Web Store, so you load it as an unpacked extension.
+
+### From a release
+
+1. Download the latest `ytbuffy-vX.Y.Z.zip` from [Releases](https://github.com/lilbatus/ytbuffy/releases) and extract it into a folder.
+2. Open `chrome://extensions` and turn on **Developer mode** in the top right corner.
+3. Click **Load unpacked** and select the extracted folder.
+4. Refresh any YouTube tabs that were already open.
+
+To update, extract the new release into the same folder, replacing the old files, and press the reload icon on the extension's card. Keeping the folder in the same place keeps your settings.
+
+### From source
+
+You need [Node.js](https://nodejs.org) 20 or later.
 
 ```bash
 git clone https://github.com/lilbatus/ytbuffy.git
@@ -30,11 +43,7 @@ npm install
 npm run build
 ```
 
-1. Open `chrome://extensions` and turn on **Developer mode** in the top right corner.
-2. Click **Load unpacked** and select the `dist` folder.
-3. Refresh any YouTube tabs that were already open.
-
-To update later, pull the latest changes, run `npm run build` again and press the reload icon on the extension's card.
+Then load the `dist` folder the same way. To update, pull the latest changes, run `npm run build` again and press the reload icon.
 
 ## Usage
 
