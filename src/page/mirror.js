@@ -4,6 +4,7 @@ import { log } from './log.js'
 
 const MIB = 1048576
 const RESTORE_WAIT_MS = 5000
+const BYTES_AS_TEXT = process.env.BROWSER === 'firefox'
 
 export function createMirror(context) {
   const sent = new Set()
@@ -15,27 +16,31 @@ export function createMirror(context) {
     return connected && !restoring && context.active() && context.settings.keepOnReload
   }
 
-  function copy(bytes) {
-    return bytes.slice().buffer
+  function pack(bytes) {
+    return BYTES_AS_TEXT ? bytes.toBase64() : bytes.slice().buffer
+  }
+
+  function transferable(values) {
+    return BYTES_AS_TEXT ? [] : values
   }
 
   function sendSegment(videoId, track, segment) {
-    const header = copy(segment.header)
-    const data = copy(segment.data)
+    const header = pack(segment.header)
+    const data = pack(segment.data)
     send('vault', {
       op: 'segment', videoId, key: track.key, number: segment.number,
       startMs: segment.startMs, durationMs: segment.durationMs, header, data
-    }, [header, data])
+    }, transferable([header, data]))
   }
 
   function sendTrack(videoId, track) {
     const id = `${videoId}|${track.key}`
     if (sent.has(id) || !track.meta || !track.init) return
     sent.add(id)
-    const meta = copy(track.meta.raw)
-    const initHeader = copy(track.init.header)
-    const init = copy(track.init.data)
-    send('vault', { op: 'track', videoId, key: track.key, mimeType: track.meta.mimeType, meta, initHeader, init }, [meta, initHeader, init])
+    const meta = pack(track.meta.raw)
+    const initHeader = pack(track.init.header)
+    const init = pack(track.init.data)
+    send('vault', { op: 'track', videoId, key: track.key, mimeType: track.meta.mimeType, meta, initHeader, init }, transferable([meta, initHeader, init]))
     for (const segment of track.segments.values()) sendSegment(videoId, track, segment)
   }
 

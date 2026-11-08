@@ -37,7 +37,7 @@ test('parseRequest reads the fields the cache needs', () => {
   assert.deepEqual(parsed.initializedFormats, [audio])
   assert.deepEqual(parsed.ranges, [{ format: video, startMs: 0, durationMs: 10000, startSegment: 1, endSegment: 2 }])
   assert.deepEqual(parsed.cookie, Uint8Array.of(7))
-  assert.equal(parsed.hasPoToken, true)
+  assert.ok(parsed.poToken?.length)
 })
 
 test('buildRequest changes only what it is asked to change', () => {

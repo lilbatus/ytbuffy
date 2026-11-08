@@ -9,6 +9,7 @@ const BATCH = 4
 const ASK_TIMEOUT_MS = 5000
 const PUMP_MS = 500
 const PROBE_MS = 5000
+const PROBE_TIMEOUT_MS = 4000
 const TIME_MS = 3000
 const PROBE_URL = 'https://www.youtube.com/generate_204'
 
@@ -23,6 +24,8 @@ const pending = new Map()
 let online = false
 let cachedEndS = 0
 let port = null
+let probes = 0
+let probeTimer = 0
 
 channel.onmessage = ({ data }) => {
   const resolve = pending.get(data?.id)
@@ -157,13 +160,18 @@ function render() {
 }
 
 async function probe() {
+  const id = ++probes
+  clearTimeout(probeTimer)
+  let reachable = true
   try {
-    await fetch(PROBE_URL, { mode: 'no-cors', cache: 'no-store', credentials: 'omit' })
-    online = true
+    await fetch(PROBE_URL, { mode: 'no-cors', cache: 'no-store', credentials: 'omit', signal: AbortSignal.timeout(PROBE_TIMEOUT_MS) })
   } catch {
-    online = false
+    reachable = false
   }
+  if (id !== probes) return
+  online = reachable
   render()
+  probeTimer = setTimeout(probe, PROBE_MS)
 }
 
 function keepTime() {
@@ -186,6 +194,9 @@ video.addEventListener('timeupdate', () => {
 back.addEventListener('click', event => {
   if (!online) event.preventDefault()
 })
+
+window.addEventListener('online', probe)
+window.addEventListener('offline', probe)
 
 document.addEventListener('keydown', event => {
   if (event.target === video || event.ctrlKey || event.metaKey || event.altKey) return
@@ -218,7 +229,6 @@ async function start() {
   back.textContent = t('replayBack')
   back.href = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}&t=${Math.floor(requestedS)}s`
   probe()
-  setInterval(probe, PROBE_MS)
   const reply = await ask('manifest')
   const manifest = reply?.manifest
   const tracks = manifest && pickTracks(manifest)

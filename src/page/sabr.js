@@ -101,7 +101,7 @@ export function parseRequest(body) {
     audioFormats: formatsOf(fields, REQUEST.audioFormats),
     videoFormats: formatsOf(fields, REQUEST.videoFormats),
     cookie: readBytes(streamer, STREAMER.cookie),
-    hasPoToken: Boolean(readBytes(streamer, STREAMER.poToken)?.length)
+    poToken: readBytes(streamer, STREAMER.poToken) || null
   }
 }
 

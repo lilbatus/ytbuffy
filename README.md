@@ -6,7 +6,7 @@
 
 # YTBUFFY
 
-A Chrome extension that loads YouTube videos ahead into memory, so they keep playing when your connection drops.
+A browser extension that loads YouTube videos ahead into memory, so they keep playing when your connection drops. It runs on Chrome, Edge, Firefox, Opera, Opera GX, Brave, Vivaldi and Yandex Browser.
 
 YouTube's player only buffers two or three minutes ahead, which is not enough to get through an outage on a flaky connection. YTBUFFY keeps downloading the video in the background and feeds the player from memory, so playback carries on to the end of what has been loaded, whether the connection is up or not.
 
@@ -21,16 +21,45 @@ YouTube's player only buffers two or three minutes ahead, which is not enough to
 
 ## Installation
 
-YTBUFFY is not on the Chrome Web Store, so you load it as an unpacked extension.
+YTBUFFY is not in any extension store, so you install it from a release. Every browser has its own file on the [latest release](https://github.com/lilbatus/ytbuffy/releases/latest), so download only the one for your browser:
 
-### From a release
+| Browser | File |
+| --- | --- |
+| Google Chrome | `ytbuffy-chrome-vX.Y.Z.zip` |
+| Microsoft Edge | `ytbuffy-edge-vX.Y.Z.zip` |
+| Mozilla Firefox | `ytbuffy-firefox-vX.Y.Z.zip` |
+| Opera | `ytbuffy-opera-vX.Y.Z.zip` |
+| Opera GX | `ytbuffy-operagx-vX.Y.Z.zip` |
+| Brave | `ytbuffy-brave-vX.Y.Z.zip` |
+| Vivaldi | `ytbuffy-vivaldi-vX.Y.Z.zip` |
+| Yandex Browser | `ytbuffy-yandex-vX.Y.Z.zip` |
 
-1. Download the latest `ytbuffy-vX.Y.Z.zip` from [Releases](https://github.com/lilbatus/ytbuffy/releases) and extract it into a folder.
-2. Open `chrome://extensions` and turn on **Developer mode** in the top right corner.
+### Chrome, Edge, Opera, Opera GX, Brave, Vivaldi and Yandex Browser
+
+1. Extract the zip into a folder you will keep. The browser loads the extension from that folder, so do not delete or move it later.
+2. Open your browser's extensions page from the table below and turn on **Developer mode**.
 3. Click **Load unpacked** and select the extracted folder.
 4. Refresh any YouTube tabs that were already open.
 
+| Browser | Extensions page | Developer mode switch |
+| --- | --- | --- |
+| Chrome | `chrome://extensions` | top right |
+| Edge | `edge://extensions` | bottom of the left sidebar |
+| Opera | `opera://extensions` | top right, next to the search box |
+| Opera GX | `opera://extensions` | on the right, just above the list of extensions |
+| Brave | `brave://extensions` | top right |
+| Vivaldi | `vivaldi://extensions` | top right |
+| Yandex Browser | `browser://extensions` | top right |
+
 To update, extract the new release into the same folder, replacing the old files, and press the reload icon on the extension's card. Keeping the folder in the same place keeps your settings.
+
+### Firefox
+
+1. Open `about:debugging#/runtime/this-firefox`.
+2. Click **Load Temporary Add-on…** and select the downloaded zip. There is no need to extract it.
+3. Refresh any YouTube tabs that were already open.
+
+Release versions of Firefox only keep add-ons that Mozilla has signed, so Firefox removes this one when it closes, and you load it again after a restart. Firefox Developer Edition, Nightly and ESR can keep it installed: set `xpinstall.signatures.required` to `false` in `about:config`, rename the zip to `ytbuffy.xpi`, then open `about:addons`, click the gear icon, choose **Install Add-on From File…** and select it.
 
 ### From source
 
@@ -43,7 +72,7 @@ npm install
 npm run build
 ```
 
-Then load the `dist` folder the same way. To update, pull the latest changes, run `npm run build` again and press the reload icon.
+This builds every browser into its own folder: `dist/chrome`, `dist/edge`, `dist/firefox` and so on. Load the folder for your browser as described above; in Firefox, select the `manifest.json` inside `dist/firefox`. To build only one browser, name it, for example `npm run build -- firefox`. To update, pull the latest changes, build again and press the reload icon.
 
 ## Usage
 
@@ -129,7 +158,7 @@ Shown with *keep recent videos*. How many videos stay in memory, counting the on
 #### When the connection drops
 
 **Keep playing after a page reload** `on`\
-If you reload the page while offline, YouTube cannot load: you get either Chrome's error page or YouTube's own offline page. With this on, the extension opens its own simple player in that tab instead and continues the video where you left off, up to the end of what is loaded. Once the connection is back, one click takes you back to YouTube, and the loaded part comes along, so nothing has to be downloaded again.
+If you reload the page while offline, YouTube cannot load: you get either the browser's error page or YouTube's own offline page. With this on, the extension opens its own simple player in that tab instead and continues the video where you left off, up to the end of what is loaded. Once the connection is back, one click takes you back to YouTube, and the loaded part comes along, so nothing has to be downloaded again.
 
 To make this possible, the extension keeps a second copy of the loaded video in its own memory, so memory use can nearly double. The copy is still RAM only, never touches the disk and never goes over the memory limit.
 
@@ -181,8 +210,8 @@ Shows a short notice on the player once the whole video is in memory.
 **Debug mode** `off`\
 Writes a detailed log to the browser console: open DevTools, go to Console and look for lines starting with `[ytbuffy]`. Turn it on when something does not work and you want to see why, or when you report a bug.
 
-**Browser video buffer limit (MB)** `150` and **Browser audio buffer limit (MB)** `12`\
-How much media Chrome lets one player buffer. Only *Let the player buffer more too* uses these values. Leave them as they are unless you start Chrome with the flags described [below](#a-bigger-player-buffer).
+**Browser video buffer limit (MB)** `150` and **Browser audio buffer limit (MB)** `12`, or `20` on Firefox\
+How much media the browser lets one player buffer. Only *Let the player buffer more too* uses these values. Leave them as they are unless you raised the browser's limits as described [below](#a-bigger-player-buffer).
 
 **Export settings** and **Import settings**\
 Copy all your settings as text to keep them or move them to another computer, then paste them back later. Settings missing from the pasted text keep their current values.
@@ -204,25 +233,44 @@ After a reload without a connection, the video opens in the extension's own play
 
 ### A bigger player buffer
 
-Chrome limits each player's buffer to 150 MB of video and 12 MB of audio. Playing from memory is not affected by this, but *Let the player buffer more too* is. To raise the limits, start Chrome with these flags while it is fully closed:
+Each player's buffer is limited by the browser: 150 MB of video and 12 MB of audio in Chrome and the other Chromium-based browsers, 150 MB and 20 MB in Firefox. Playing from memory is not affected by this, but *Let the player buffer more too* is.
+
+**Chrome, Edge, Opera, Opera GX, Brave, Vivaldi and Yandex Browser.** Fully close the browser, then start it with these flags:
+
+```
+--mse-video-buffer-size-limit-mb=1024 --mse-audio-buffer-size-limit-mb=96
+```
+
+On Windows the program is `chrome.exe` for Chrome, `msedge.exe` for Edge, `opera.exe` for Opera and Opera GX, `brave.exe` for Brave, `vivaldi.exe` for Vivaldi and `browser.exe` for Yandex Browser, for example:
 
 ```
 chrome.exe --mse-video-buffer-size-limit-mb=1024 --mse-audio-buffer-size-limit-mb=96
 ```
 
-Then enter the same values under **Advanced**.
+**Firefox.** In `about:config`, set `media.mediasource.eviction_threshold.video` and `media.mediasource.eviction_threshold.audio`. The values are in bytes: `1073741824` is 1024 MB and `100663296` is 96 MB.
 
-### Memory Saver
+Then enter the same amounts in MB under **Advanced**.
 
-If Chrome's Memory Saver discards a background tab, the memory that tab used goes with it. To prevent this, add `youtube.com` to **Always keep these sites active** at `chrome://settings/performance`.
+### Tabs that go to sleep
+
+Browsers can put background tabs to sleep to save memory. A tab that is put to sleep loses what was loaded, so keep YouTube awake:
+
+- **Chrome:** at `chrome://settings/performance`, add `youtube.com` under **Always keep these sites active**.
+- **Edge:** at `edge://settings/system/managePerformance`, click **Add site** next to **Always keep these sites active** and add `youtube.com`.
+- **Brave:** at `brave://settings/system`, add `youtube.com` under **Always keep these sites active**.
+- **Opera:** search the settings for *snooze* and turn off **Snooze inactive tabs to save memory**.
+- **Opera GX:** the same, and also **Snooze inactive tabs when system memory usage is high**. If you use the RAM limiter in GX Control, leave room for the extension's memory limit, since the loaded video counts toward the browser's memory use.
+- **Vivaldi:** hibernating a tab unloads it, so leave the tab you are watching awake.
+- **Yandex Browser:** at `browser://settings/system`, turn off **Put unused tabs to sleep** if YouTube tabs get put to sleep.
+- **Firefox:** unloads background tabs only when the computer runs low on memory.
 
 ## Privacy
 
 - Video data lives only in memory and is never written to disk.
 - Nothing is sent anywhere except to YouTube itself.
-- Settings are kept locally with `chrome.storage.local` and are not synced.
+- Settings are kept in the browser's local extension storage and are not synced.
 
-The extension asks for three permissions: `storage` for your settings, `offscreen` for the copy kept for page reloads, and `webNavigation` to notice a reload that failed because the connection is down.
+In Chrome and the other Chromium-based browsers, the extension asks for three permissions: `storage` for your settings, `offscreen` for the copy kept for page reloads, and `webNavigation` to notice a reload that failed because the connection is down. Firefox has no offscreen documents, so there it asks for `storage`, `webNavigation` and access to `www.youtube.com`, and its manifest declares that the extension collects no data.
 
 ## Limitations
 
@@ -230,26 +278,30 @@ The extension asks for three permissions: `storage` for your settings, `offscree
 - You cannot switch to another video while offline, because YouTube cannot open a new page without a connection.
 - The player that opens after a reload is not the YouTube page, so there are no comments, suggestions or captions there.
 - SABR is undocumented. If YouTube changes it, the extension may stop working until it is updated.
-- Built and tested on Chrome 156.
+- Tested on Windows with Chrome 156, Edge 157, Firefox 159, Opera 139, Opera GX 139, Brave 1.99, Vivaldi 8.3 and Yandex Browser 26.10.
 
 ## Development
 
 ```bash
-npm test        # unit and flow tests
-npm run build   # builds the extension into dist/
-npm run watch   # rebuilds on every change
+npm test                  # unit and flow tests
+npm run build             # builds every browser into dist/<browser>
+npm run build -- firefox  # builds a single browser
+npm run watch -- chrome   # rebuilds one browser on every change
+npm run release           # builds every browser and zips each one into release/
 ```
 
 | Folder | What is inside |
 | --- | --- |
 | `src/page` | The core that runs inside the YouTube page: request hooks, SABR and UMP parsing, the memory cache, loading ahead and serving from memory |
 | `src/content` | The bridge to the extension and the overlays on the player |
-| `src/background` | The service worker that opens the player after a failed reload |
-| `src/vault` | The offscreen document that keeps the copy for page reloads |
+| `src/background` | `main.js`, the service worker that opens the player after a failed reload; `firefox.js`, its Firefox counterpart, which also holds the copy for page reloads |
+| `src/vault` | `main.js`, the offscreen document that keeps the copy for page reloads; `firefox.js`, the same store for Firefox's background page |
 | `src/replay` | The player that opens after a reload |
 | `src/popup`, `src/options` | The popup and the settings page |
 | `src/shared` | Settings, the interface text in both languages and a few shared functions |
-| `static` | The manifest, HTML, CSS and icons |
+| `static` | The manifests (`manifest.json` for Chromium-based browsers, `manifest.firefox.json` for Firefox), HTML, CSS and icons |
+
+The build sets `process.env.BROWSER` to the browser it builds for. Chromium-based builds differ only in the browser name in a few setting descriptions. The Firefox build uses its own manifest, background and vault, and the page sends video data to the extension as base64 text, because Firefox keeps a page's memory apart from the extension's.
 
 ## License
 

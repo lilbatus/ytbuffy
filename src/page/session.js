@@ -4,6 +4,7 @@ import {
   parseProtection, parseContextUpdate, parseSendingPolicy
 } from './sabr.js'
 import { log } from './log.js'
+import { kindOfItag } from './kinds.js'
 
 const TURN_TIMEOUT_MS = 30000
 
@@ -34,6 +35,8 @@ export function createSession(videoId) {
     stalls: 0,
     live: false,
     autostart: false,
+    token: '',
+    blockedToken: null,
     busy: null
   }
 }
@@ -56,7 +59,14 @@ export function adopt(session, template, body, parsed) {
   session.body = body
   session.rn = Math.max(session.rn, Number(new URL(template.url).searchParams.get('rn')) || 0)
   session.failure = ''
-  if (parsed?.bandwidthEstimate && Date.now() - session.servedAt > 30000) session.bandwidth = parsed.bandwidthEstimate
+  if (!parsed) return
+  if (parsed.bandwidthEstimate && Date.now() - session.servedAt > 30000) session.bandwidth = parsed.bandwidthEstimate
+  const token = parsed.poToken ? String.fromCharCode(...parsed.poToken) : ''
+  if (session.blockedToken !== null && token !== session.blockedToken) {
+    session.blockedToken = null
+    log('session', session.videoId, 'got a new token from the player, loading resumes')
+  }
+  session.token = token
 }
 
 export function requestUrl(session) {
@@ -129,7 +139,9 @@ export function control(session, type, payload, cache) {
     const error = parseError(payload)
     fail(session, `sabr error ${error.type} ${error.code}`)
   } else if (type === PART.STREAM_PROTECTION_STATUS) {
-    if (parseProtection(payload) === ATTESTATION_REQUIRED) fail(session, 'attestation required')
+    if (parseProtection(payload) !== ATTESTATION_REQUIRED || session.blockedToken !== null) return
+    session.blockedToken = session.token
+    fail(session, 'attestation required, waiting for the player to renew its token')
   } else if (type === PART.RELOAD_PLAYER_RESPONSE) {
     fail(session, 'player reload requested')
   } else if (type === PART.SABR_CONTEXT_UPDATE) {
@@ -161,7 +173,7 @@ export function kindOf(cache, session, format) {
   if (mimeType.startsWith('video/')) return 'video'
   if (session.tracks.audio && formatKey(session.tracks.audio) === key) return 'audio'
   if (session.tracks.video && formatKey(session.tracks.video) === key) return 'video'
-  return ''
+  return kindOfItag(format.itag)
 }
 
 function claimTrack(cache, session, format) {

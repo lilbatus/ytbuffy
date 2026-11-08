@@ -138,6 +138,7 @@ export function createServer(context) {
 
   function planFor(session, parsed) {
     if (!session.serving || session.live || !session.policy || context.player.ad()) return null
+    if (session.blockedToken !== null && context.network.online) return null
     if (!parsed.initializedFormats.length && context.network.online) return null
     const targets = context.readahead.targets(session)
     const plan = { inits: [], segments: [], served: [], missing: false }

@@ -49,3 +49,12 @@ test('quality lock picks the exact level or falls back in the chosen direction',
   assert.equal(pickLevel(['hd720'], '144', 'lower'), 'hd720')
   assert.equal(pickLevel([], '720', 'lower'), null)
 })
+
+test('the audio buffer default follows the browser', async () => {
+  for (const [browser, megabytes] of [['chrome', 12], ['opera', 12], ['firefox', 20]]) {
+    process.env.BROWSER = browser
+    const { DEFAULTS } = await import(`../src/shared/settings.js?${browser}`)
+    assert.equal(DEFAULTS.mseAudioMb, megabytes, browser)
+  }
+  delete process.env.BROWSER
+})

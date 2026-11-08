@@ -1,3 +1,19 @@
+const BROWSER = process.env.BROWSER || 'chrome'
+
+const BROWSER_NAMES = {
+  chrome: { name: 'Chrome', genitive: 'Chrome\'un', accusative: 'Chrome\'u' },
+  edge: { name: 'Edge', genitive: 'Edge\'in', accusative: 'Edge\'i' },
+  brave: { name: 'Brave', genitive: 'Brave\'in', accusative: 'Brave\'i' },
+  vivaldi: { name: 'Vivaldi', genitive: 'Vivaldi\'nin', accusative: 'Vivaldi\'yi' },
+  opera: { name: 'Opera', genitive: 'Opera\'nın', accusative: 'Opera\'yı' },
+  operagx: { name: 'Opera GX', genitive: 'Opera GX\'in', accusative: 'Opera GX\'i' },
+  yandex: { name: 'Yandex Browser', genitive: 'Yandex Browser\'ın', accusative: 'Yandex Browser\'ı' },
+  firefox: { name: 'Firefox', genitive: 'Firefox\'un', accusative: 'Firefox\'u' }
+}
+
+const browser = BROWSER_NAMES[BROWSER]
+const firefox = BROWSER === 'firefox'
+
 export const STRINGS = {
   en: {
     extName: 'YTBUFFY',
@@ -120,7 +136,7 @@ export const STRINGS = {
     opt_keepVideos_desc: 'How many videos stay in memory, counting the one you are watching. They share the memory limit, so the more you keep, the less room each one gets.',
 
     opt_keepOnReload: 'Keep playing after a page reload',
-    opt_keepOnReload_desc: 'If you reload the page (F5) while the connection is down, YouTube cannot load, and you get Chrome\'s error page or YouTube\'s own offline page. With this on, the extension opens its own simple player in that tab instead and continues the video where you left off, up to the end of the part in memory. Once the connection is back, one click takes you back to YouTube, and what was loaded comes along, so nothing has to be downloaded again.',
+    opt_keepOnReload_desc: `If you reload the page (F5) while the connection is down, YouTube cannot load, and you get ${browser.name}'s error page or YouTube's own offline page. With this on, the extension opens its own simple player in that tab instead and continues the video where you left off, up to the end of the part in memory. Once the connection is back, one click takes you back to YouTube, and what was loaded comes along, so nothing has to be downloaded again.`,
     opt_keepOnReload_warn: 'Uses extra memory: a second copy of the loaded video is kept inside the extension, so memory use can nearly double. It is still RAM only and never touches the disk. If your computer runs short of memory, lower the memory limit, turn on the option below, or turn this off.',
     opt_trimCopy: 'Let the copy drop what you have watched',
     opt_trimCopy_desc: 'Saves memory: the copy kept for page reloads holds on only to the last few minutes before the point you are watching and lets go of everything older. The catch is that after a reload you can only rewind that far in the extension\'s player, and when you go back to YouTube the older parts have to be downloaded again. When off, the copy keeps everything you watched until the memory limit is reached.',
@@ -159,9 +175,13 @@ export const STRINGS = {
     opt_debug: 'Debug mode',
     opt_debug_desc: 'Writes a detailed log to the browser console: DevTools > Console, lines starting with [ytbuffy]. Only needed when something does not work and you want to see why.',
     opt_mseVideoMb: 'Browser video buffer limit (MB)',
-    opt_mseVideoMb_desc: 'How much video Chrome lets the YouTube player buffer; only "Let the player buffer more too" uses it. Leave it at 150 unless you start Chrome with the --mse-video-buffer-size-limit-mb flag, in which case enter the same value.',
+    opt_mseVideoMb_desc: firefox
+      ? 'How much video Firefox lets the YouTube player buffer; only "Let the player buffer more too" uses it. Leave it at 150 unless you changed media.mediasource.eviction_threshold.video in about:config, in which case enter the same amount in MB.'
+      : `How much video ${browser.name} lets the YouTube player buffer; only "Let the player buffer more too" uses it. Leave it at 150 unless you start ${browser.name} with the --mse-video-buffer-size-limit-mb flag, in which case enter the same value.`,
     opt_mseAudioMb: 'Browser audio buffer limit (MB)',
-    opt_mseAudioMb_desc: 'The same for audio. Leave it at 12 unless you start Chrome with the --mse-audio-buffer-size-limit-mb flag.',
+    opt_mseAudioMb_desc: firefox
+      ? 'The same for audio. Leave it at 20 unless you changed media.mediasource.eviction_threshold.audio in about:config.'
+      : `The same for audio. Leave it at 12 unless you start ${browser.name} with the --mse-audio-buffer-size-limit-mb flag.`,
     opt_export: 'Export settings',
     opt_export_desc: 'All your settings as text. Copy it and keep it somewhere to restore your settings later or move them to another computer.',
     opt_import: 'Import settings',
@@ -311,7 +331,7 @@ export const STRINGS = {
     opt_keepVideos_desc: 'İzlediğin video dahil bellekte kaç video kalacağı. Hepsi bellek limitini paylaşır; ne kadar çok video tutarsan her birine o kadar az yer düşer.',
 
     opt_keepOnReload: 'Sayfa yenilenince de oynatmaya devam et',
-    opt_keepOnReload_desc: 'Bağlantı yokken sayfayı yenilersen (F5) YouTube açılamaz; Chrome\'un hata sayfası ya da YouTube\'un kendi "İnternete bağlanın" sayfası gelir. Bu ayar açıkken eklenti o sekmede kendi sade oynatıcısını açar ve videoyu kaldığın yerden, bellekteki kısmın sonuna kadar oynatır. Bağlantı gelince tek tıkla YouTube\'a dönersin; yüklenen kısım da seninle gelir, yeniden indirilmesi gerekmez.',
+    opt_keepOnReload_desc: `Bağlantı yokken sayfayı yenilersen (F5) YouTube açılamaz; ${browser.genitive} hata sayfası ya da YouTube'un kendi "İnternete bağlanın" sayfası gelir. Bu ayar açıkken eklenti o sekmede kendi sade oynatıcısını açar ve videoyu kaldığın yerden, bellekteki kısmın sonuna kadar oynatır. Bağlantı gelince tek tıkla YouTube'a dönersin; yüklenen kısım da seninle gelir, yeniden indirilmesi gerekmez.`,
     opt_keepOnReload_warn: 'Ek bellek kullanır: yüklenen videonun ikinci bir kopyası eklentinin içinde tutulur, bu yüzden bellek kullanımı neredeyse iki katına çıkabilir. Yine de yalnızca RAM kullanılır, diske hiç dokunulmaz. Bilgisayarının belleği yetmiyorsa bellek limitini düşür, aşağıdaki ayarı aç ya da bu ayarı kapat.',
     opt_trimCopy: 'Kopya izlediğin kısımları bıraksın',
     opt_trimCopy_desc: 'Bellekten tasarruf eder: sayfa yenileme için tutulan kopya, izlediğin yerin yalnızca son birkaç dakikasını saklar ve daha eskisini bırakır. Bedeli şu: sayfayı yeniledikten sonra eklentinin oynatıcısında yalnızca o kadar geri sarabilirsin, YouTube\'a dönünce de daha eski kısımların yeniden indirilmesi gerekir. Kapalıyken kopya, bellek limiti dolana kadar izlediğin her şeyi tutar.',
@@ -350,9 +370,13 @@ export const STRINGS = {
     opt_debug: 'Debug modu',
     opt_debug_desc: 'Tarayıcı konsoluna ayrıntılı log yazar: DevTools > Console içinde [ytbuffy] ile başlayan satırlar. Yalnızca bir şey çalışmadığında nedenini görmek için gerekir.',
     opt_mseVideoMb: 'Tarayıcı video tampon sınırı (MB)',
-    opt_mseVideoMb_desc: 'Chrome\'un YouTube oynatıcısına izin verdiği video tamponu; yalnızca "Oynatıcı da daha fazlasını tutsun" ayarı kullanır. Chrome\'u --mse-video-buffer-size-limit-mb bayrağıyla başlatmıyorsan 150\'de bırak; başlatıyorsan aynı değeri gir.',
+    opt_mseVideoMb_desc: firefox
+      ? 'Firefox\'un YouTube oynatıcısına izin verdiği video tamponu; yalnızca "Oynatıcı da daha fazlasını tutsun" ayarı kullanır. about:config\'de media.mediasource.eviction_threshold.video değerini değiştirmediysen 150\'de bırak; değiştirdiysen aynı miktarı MB olarak gir.'
+      : `${browser.genitive} YouTube oynatıcısına izin verdiği video tamponu; yalnızca "Oynatıcı da daha fazlasını tutsun" ayarı kullanır. ${browser.accusative} --mse-video-buffer-size-limit-mb bayrağıyla başlatmıyorsan 150'de bırak; başlatıyorsan aynı değeri gir.`,
     opt_mseAudioMb: 'Tarayıcı ses tampon sınırı (MB)',
-    opt_mseAudioMb_desc: 'Aynısı ses için. Chrome\'u --mse-audio-buffer-size-limit-mb bayrağıyla başlatmıyorsan 12\'de bırak.',
+    opt_mseAudioMb_desc: firefox
+      ? 'Aynısı ses için. about:config\'de media.mediasource.eviction_threshold.audio değerini değiştirmediysen 20\'de bırak.'
+      : `Aynısı ses için. ${browser.accusative} --mse-audio-buffer-size-limit-mb bayrağıyla başlatmıyorsan 12'de bırak.`,
     opt_export: 'Ayarları dışa aktar',
     opt_export_desc: 'Tüm ayarların metin olarak. Kopyalayıp bir yerde saklarsan ayarlarını daha sonra geri yükleyebilir ya da başka bir bilgisayara taşıyabilirsin.',
     opt_import: 'Ayarları içe aktar',

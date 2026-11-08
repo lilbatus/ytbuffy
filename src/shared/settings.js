@@ -36,7 +36,7 @@ export const DEFAULTS = {
   notifyLoaded: true,
   debug: false,
   mseVideoMb: 150,
-  mseAudioMb: 12
+  mseAudioMb: process.env.BROWSER === 'firefox' ? 20 : 12
 }
 
 export const CHOICES = {

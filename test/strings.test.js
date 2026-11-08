@@ -47,3 +47,18 @@ test('every key the code asks for exists', () => {
   assert.ok(keys.length > 20)
   for (const key of new Set(keys)) assert.ok(STRINGS.en[key], key)
 })
+
+test('each browser build names that browser and no other', async () => {
+  const names = { chrome: 'Chrome', edge: 'Edge', brave: 'Brave', vivaldi: 'Vivaldi', opera: 'Opera', operagx: 'Opera GX', yandex: 'Yandex Browser', firefox: 'Firefox' }
+  for (const [browser, name] of Object.entries(names)) {
+    process.env.BROWSER = browser
+    const text = JSON.stringify((await import(`../src/shared/strings.js?${browser}`)).STRINGS)
+    assert.ok(text.includes(`${name}'s error page`), browser)
+    for (const other of Object.values(names)) {
+      if (!name.includes(other)) assert.ok(!text.includes(other), `${browser} mentions ${other}`)
+    }
+    assert.equal(text.includes('about:config'), browser === 'firefox', browser)
+    assert.equal(text.includes('--mse-'), browser !== 'firefox', browser)
+  }
+  delete process.env.BROWSER
+})

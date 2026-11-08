@@ -9,6 +9,7 @@ import { createServer } from '../src/page/serve.js'
 import { createSession } from '../src/page/session.js'
 import { createReadahead } from '../src/page/readahead.js'
 import { describe } from '../src/page/hooks.js'
+import { learnKinds } from '../src/page/kinds.js'
 import { DEFAULTS } from '../src/shared/settings.js'
 
 globalThis.location = { href: 'https://www.youtube.com/watch?v=abcdefghijk', origin: 'https://www.youtube.com', pathname: '/watch' }
@@ -28,6 +29,7 @@ function mediaBytes(track, number) {
 
 function createServerStub() {
   const requests = []
+  const state = { protect: false }
   function respond(url, body) {
     const parsed = parseRequest(body)
     requests.push({ url, parsed })
@@ -35,6 +37,7 @@ function createServerStub() {
       makeVarint(1, 30000), makeVarint(2, 30000), makeVarint(4, 200),
       makeBytes(7, new TextEncoder().encode(`cookie${requests.length}`)), makeString(8, VIDEO_ID)
     ]))]
+    if (state.protect) parts.push(writePart(PART.STREAM_PROTECTION_STATUS, encode([makeVarint(1, 3)])))
     let headerId = 0
     for (const track of TRACKS) {
       const key = formatKey(track.format)
@@ -69,16 +72,16 @@ function createServerStub() {
     const bytes = respond(url, init.body)
     return new Response(bytes, { status: 200, headers: { 'content-type': 'application/vnd.yt-ump', 'content-length': String(bytes.length) } })
   }
-  return { requests, fetchStub }
+  return { requests, fetchStub, state }
 }
 
-function playerBody({ timeMs = 0, formats = [], ranges = [], manualResolution = 0 } = {}) {
+function playerBody({ timeMs = 0, formats = [], ranges = [], manualResolution = 0, token = 9 } = {}) {
   const abr = [makeVarint(23, 4000000), makeVarint(28, timeMs)]
   if (manualResolution) abr.push(makeVarint(16, manualResolution))
   const fields = [
     makeMessage(1, abr),
     makeBytes(5, Uint8Array.of(42)),
-    makeMessage(19, [makeBytes(2, Uint8Array.of(9)), makeBytes(3, new TextEncoder().encode('player-cookie'))])
+    makeMessage(19, [makeBytes(2, Uint8Array.of(token)), makeBytes(3, new TextEncoder().encode('player-cookie'))])
   ]
   for (const range of ranges) {
     fields.push(makeMessage(3, [
@@ -422,4 +425,40 @@ test('a flushed player buffer does not count against serving', async () => {
   await (await context.server.handle(playerCall(body))).arrayBuffer()
   await (await context.server.handle(playerCall(playerBody({ timeMs: 3000, formats: BOTH })))).arrayBuffer()
   assert.equal(session.strikes, 0)
+})
+
+test('an attestation request pauses loading until the player brings a new token', async () => {
+  const { context, stub } = setup()
+  stub.state.protect = true
+  await (await context.server.handle(playerCall(playerBody()))).arrayBuffer()
+  const session = context.sessions.get(VIDEO_ID)
+  assert.notEqual(session.blockedToken, null)
+  assert.equal(context.scheduler.evaluate(session, true).state, 'error')
+  await new Promise(resolve => setTimeout(resolve, 50))
+  const before = stub.requests.length
+  const ranges = [
+    { format: AUDIO.format, startMs: 0, durationMs: 20000, startSegment: 1, endSegment: 2 },
+    { format: VIDEO.format, startMs: 0, durationMs: 10000, startSegment: 1, endSegment: 2 }
+  ]
+  await (await context.server.handle(playerCall(playerBody({ timeMs: 3000, formats: BOTH, ranges })))).arrayBuffer()
+  assert.equal(stub.requests.length, before + 1, 'the player request goes to YouTube so it can renew its token')
+  stub.state.protect = false
+  await (await context.server.handle(playerCall(playerBody({ timeMs: 3000, formats: BOTH, ranges, token: 7 })))).arrayBuffer()
+  assert.equal(session.blockedToken, null)
+  await until(() => context.cache.complete(VIDEO_ID, formatKey(VIDEO.format)) && context.cache.complete(VIDEO_ID, formatKey(AUDIO.format)))
+})
+
+test('a player that set up its formats before the extension saw them still gets loaded ahead', async () => {
+  const { context, stub } = setup()
+  const ranges = [
+    { format: AUDIO.format, startMs: 0, durationMs: 20000, startSegment: 1, endSegment: 2 },
+    { format: VIDEO.format, startMs: 0, durationMs: 10000, startSegment: 1, endSegment: 2 }
+  ]
+  learnKinds(TRACKS.map(track => ({ itag: track.format.itag, mimeType: track.mime })))
+  await (await context.server.handle(playerCall(playerBody({ timeMs: 3000, formats: BOTH, ranges })))).arrayBuffer()
+  const session = context.sessions.get(VIDEO_ID)
+  assert.deepEqual(session.tracks, { audio: AUDIO.format, video: VIDEO.format })
+  await until(() => context.cache.complete(VIDEO_ID, formatKey(AUDIO.format)) && context.cache.complete(VIDEO_ID, formatKey(VIDEO.format)))
+  assert.equal(stub.requests[1].parsed.initializedFormats.length, 0, 'the first prefetch asks for the format setup again')
+  assert.ok(context.cache.find(VIDEO_ID, formatKey(VIDEO.format)).init, 'the init segment is in memory for the reload copy')
 })

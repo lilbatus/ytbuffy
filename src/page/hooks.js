@@ -2,6 +2,7 @@ import { log } from './log.js'
 
 const INIT_KEYS = ['method', 'credentials', 'mode', 'cache', 'redirect', 'referrer', 'referrerPolicy', 'integrity', 'priority']
 const XHR_SABR = Symbol('ytbuffy-sabr')
+const SETTINGS_WAIT_MS = 2000
 
 export function isSabr(url, method) {
   return method === 'POST' && url.includes('.googlevideo.com/videoplayback') && /[?&]sabr=1(&|$)/.test(url)
@@ -46,12 +47,20 @@ export function signalOf({ request, init }) {
 
 export function installHooks(context) {
   const { nativeFetch } = context
-  window.fetch = function (input, init) {
+
+  function route(input, init) {
     if (!context.active()) return nativeFetch(input, init)
     const call = describe(input, init)
     if (isSabr(call.url, call.method)) return context.server.handle(call)
     if (isPlayerApi(call.url)) return nativeFetch(input, init).then(response => patchPlayerResponse(response, context))
     return nativeFetch(input, init)
+  }
+
+  window.fetch = function (input, init) {
+    if (context.loaded) return route(input, init)
+    const call = describe(input, init)
+    if (!isSabr(call.url, call.method) && !isPlayerApi(call.url)) return nativeFetch(input, init)
+    return context.settled(SETTINGS_WAIT_MS).then(() => route(input, init))
   }
   watchXhr(context)
 }

@@ -68,7 +68,7 @@ export function createScheduler(context) {
     const plans = formats.map(format => planTrack(session.videoId, format, fromMs, untilMs))
     if (plans.every(plan => plan.reached)) return { state: plans.every(plan => plan.complete) ? 'done' : 'target' }
     if (!settings.whilePaused && player.paused()) return { state: 'paused' }
-    if (session.failure && Date.now() < session.retryAt) return { state: 'error' }
+    if (session.blockedToken !== null || (session.failure && Date.now() < session.retryAt)) return { state: 'error' }
     return { state: 'loading', job: { session, plans, isCurrent } }
   }
 

@@ -2,6 +2,7 @@ import { DEFAULTS } from '../shared/settings.js'
 import { listen, send } from './bridge.js'
 import { createCache } from './cache.js'
 import { installHooks } from './hooks.js'
+import { learnKinds } from './kinds.js'
 import { log, setDebug } from './log.js'
 import { createMirror } from './mirror.js'
 import { createNetwork } from './network.js'
@@ -19,9 +20,14 @@ const STUCK_TICKS = 3
 start()
 
 function start() {
+  let settle
+  const settled = new Promise(resolve => {
+    settle = resolve
+  })
   const context = {
     settings: DEFAULTS,
     loaded: false,
+    settled: ms => Promise.race([settled, new Promise(resolve => setTimeout(resolve, ms))]),
     held: false,
     nativeFetch: window.fetch.bind(window),
     sessions: new Map(),
@@ -48,6 +54,7 @@ function start() {
 
   let pendingResponse = null
   trapInitialResponse(response => {
+    learnKinds(response?.streamingData?.adaptiveFormats || [])
     if (context.loaded) context.readahead.patch(response)
     else pendingResponse = response
   })
@@ -74,6 +81,7 @@ function start() {
     const previous = context.settings
     context.settings = next
     context.loaded = true
+    settle()
     setDebug(next.debug)
     if (next.quality !== previous.quality || next.qualityFallback !== previous.qualityFallback) qualityFor = ''
     if (pendingResponse) {
@@ -166,6 +174,7 @@ function start() {
     }
     const id = context.player.videoId()
     if (id !== currentId) switchVideo(id)
+    learnKinds(context.player.formats())
     watchStuck(id)
     if (closedAt && Date.now() - closedAt > CLOSED_PRUNE_MS) {
       closedAt = 0

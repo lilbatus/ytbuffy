@@ -2,10 +2,12 @@ import { log } from './log.js'
 
 const PROBE_URL = 'https://www.youtube.com/generate_204'
 const FIRST_RETRY_MS = 2000
+const PROBE_TIMEOUT_MS = 5000
 
 export function createNetwork(context, onChange) {
   let online = navigator.onLine
   let timer = 0
+  let probes = 0
 
   function set(value) {
     if (value && !navigator.onLine) value = false
@@ -23,13 +25,21 @@ export function createNetwork(context, onChange) {
   }
 
   async function probe() {
+    const id = ++probes
+    let reachable = true
     try {
-      await context.nativeFetch(PROBE_URL, { mode: 'no-cors', cache: 'no-store', credentials: 'omit' })
+      await context.nativeFetch(PROBE_URL, { mode: 'no-cors', cache: 'no-store', credentials: 'omit', signal: AbortSignal.timeout(PROBE_TIMEOUT_MS) })
+    } catch {
+      reachable = false
+    }
+    if (id !== probes) return
+    if (reachable) {
       set(true)
       if (!online) schedule()
-    } catch {
-      if (online) set(false)
-      else schedule()
+    } else if (online) {
+      set(false)
+    } else {
+      schedule()
     }
   }
 

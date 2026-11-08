@@ -6,7 +6,7 @@
 
 # YTBUFFY
 
-YouTube videolarını önceden belleğe yükleyen bir Chrome eklentisi. Bağlantın koptuğunda video oynamaya devam eder.
+YouTube videolarını önceden belleğe yükleyen bir tarayıcı eklentisi. Bağlantın koptuğunda video oynamaya devam eder. Chrome, Edge, Firefox, Opera, Opera GX, Brave, Vivaldi ve Yandex Browser'da çalışır.
 
 YouTube oynatıcısı yalnızca iki üç dakika ilerisini yükler; bağlantısı sık sık kopan biri için bu bir kesintiyi atlatmaya yetmez. YTBUFFY videoyu arka planda indirmeye devam eder ve oynatıcıyı bellekten besler. Böylece bağlantı olsa da olmasa da video, yüklenen kısmın sonuna kadar oynar.
 
@@ -21,16 +21,45 @@ YouTube oynatıcısı yalnızca iki üç dakika ilerisini yükler; bağlantısı
 
 ## Kurulum
 
-YTBUFFY Chrome Web Mağazası'nda yok; paketlenmemiş eklenti olarak yüklenir.
+YTBUFFY hiçbir eklenti mağazasında yok; hazır sürümden kurulur. [Son sürüm](https://github.com/lilbatus/ytbuffy/releases/latest) sayfasında her tarayıcının kendi dosyası var, yalnızca kendi tarayıcının dosyasını indirmen yeterli:
 
-### Hazır sürümden
+| Tarayıcı | Dosya |
+| --- | --- |
+| Google Chrome | `ytbuffy-chrome-vX.Y.Z.zip` |
+| Microsoft Edge | `ytbuffy-edge-vX.Y.Z.zip` |
+| Mozilla Firefox | `ytbuffy-firefox-vX.Y.Z.zip` |
+| Opera | `ytbuffy-opera-vX.Y.Z.zip` |
+| Opera GX | `ytbuffy-operagx-vX.Y.Z.zip` |
+| Brave | `ytbuffy-brave-vX.Y.Z.zip` |
+| Vivaldi | `ytbuffy-vivaldi-vX.Y.Z.zip` |
+| Yandex Browser | `ytbuffy-yandex-vX.Y.Z.zip` |
 
-1. [Releases](https://github.com/lilbatus/ytbuffy/releases) sayfasından en son `ytbuffy-vX.Y.Z.zip` dosyasını indir ve bir klasöre çıkar.
-2. `chrome://extensions` sayfasını aç ve sağ üstteki **Geliştirici modu**nu aç.
-3. **Paketlenmemiş öğe yükle**'ye tıkla ve çıkardığın klasörü seç.
+### Chrome, Edge, Opera, Opera GX, Brave, Vivaldi ve Yandex Browser
+
+1. Zip'i saklayacağın bir klasöre çıkar. Tarayıcı eklentiyi bu klasörden yükler; sonradan silme ya da yerini değiştirme.
+2. Aşağıdaki tablodan tarayıcının eklentiler sayfasını aç ve **Geliştirici modu**nu aç.
+3. Tablodaki yükleme düğmesine tıkla ve çıkardığın klasörü seç. İngilizce arayüzde bu düğmenin adı her tarayıcıda **Load unpacked**.
 4. Açık olan YouTube sekmelerini yenile.
 
+| Tarayıcı | Eklentiler sayfası | Geliştirici modu anahtarı | Yükleme düğmesi |
+| --- | --- | --- | --- |
+| Chrome | `chrome://extensions` | sağ üstte | **Paketlenmemiş öğe yükle** |
+| Edge | `edge://extensions` | sol kenar çubuğunun altında | **Açılmışı yükle** |
+| Opera | `opera://extensions` | sağ üstte, arama kutusunun yanında | **Paketlenmemiş öge yükle** |
+| Opera GX | `opera://extensions` | sağda, eklenti listesinin hemen üstünde | **Paketlenmemiş öge yükle** |
+| Brave | `brave://extensions` | sağ üstte | **Paketlenmemiş öğe yükle** |
+| Vivaldi | `vivaldi://extensions` | sağ üstte | **Paketlenmemişi Yükle** |
+| Yandex Browser | `browser://extensions` | sağ üstte | **Paketlenmemiş öğe yükle** |
+
 Güncellemek için yeni sürümü aynı klasöre, eski dosyaların üzerine çıkar ve eklentinin kartındaki yenile simgesine bas. Klasörün yerini değiştirmezsen ayarların korunur.
+
+### Firefox
+
+1. `about:debugging#/runtime/this-firefox` sayfasını aç.
+2. **Geçici eklenti yükle…** (İngilizce arayüzde **Load Temporary Add-on…**) düğmesine tıkla ve indirdiğin zip'i seç. Zip'i çıkarman gerekmez.
+3. Açık olan YouTube sekmelerini yenile.
+
+Firefox'un normal sürümleri yalnızca Mozilla'nın imzaladığı eklentileri kalıcı olarak tutar. Bu yüzden Firefox kapanınca eklenti kaldırılır ve yeniden başlattıktan sonra tekrar yüklemen gerekir. Firefox Developer Edition, Nightly ve ESR ise eklentiyi kalıcı olarak tutabilir: `about:config` sayfasında `xpinstall.signatures.required` değerini `false` yap, zip'in adını `ytbuffy.xpi` olarak değiştir, sonra `about:addons` sayfasında dişli simgesine tıklayıp **Dosyadan eklenti yükle…** (İngilizce arayüzde **Install Add-on From File…**) ile onu seç.
 
 ### Kaynaktan derleyerek
 
@@ -43,7 +72,7 @@ npm install
 npm run build
 ```
 
-Sonra `dist` klasörünü aynı şekilde yükle. Güncellemek için son değişiklikleri çek, `npm run build` komutunu yeniden çalıştır ve yenile simgesine bas.
+Bu komut her tarayıcıyı kendi klasörüne derler: `dist/chrome`, `dist/edge`, `dist/firefox` gibi. Kendi tarayıcının klasörünü yukarıdaki adımlarla yükle; Firefox'ta `dist/firefox` içindeki `manifest.json` dosyasını seç. Yalnızca bir tarayıcıyı derlemek için adını yaz, örneğin `npm run build -- firefox`. Güncellemek için son değişiklikleri çek, yeniden derle ve yenile simgesine bas.
 
 ## Kullanım
 
@@ -129,7 +158,7 @@ Aynı sekmede başka bir video açtığında ya da bir videodan çıkıp bir dak
 #### Bağlantı kopunca
 
 **Sayfa yenilenince de oynatmaya devam et** `açık`\
-Bağlantı yokken sayfayı yenilersen YouTube açılamaz; ya Chrome'un hata sayfası ya da YouTube'un kendi "İnternete bağlanın" sayfası gelir. Bu ayar açıkken eklenti o sekmede kendi sade oynatıcısını açar ve videoyu kaldığın yerden, yüklenen kısmın sonuna kadar oynatır. Bağlantı gelince tek tıkla YouTube'a dönersin; yüklenen kısım da seninle gelir, hiçbir şeyin yeniden indirilmesi gerekmez.
+Bağlantı yokken sayfayı yenilersen YouTube açılamaz; ya tarayıcının hata sayfası ya da YouTube'un kendi "İnternete bağlanın" sayfası gelir. Bu ayar açıkken eklenti o sekmede kendi sade oynatıcısını açar ve videoyu kaldığın yerden, yüklenen kısmın sonuna kadar oynatır. Bağlantı gelince tek tıkla YouTube'a dönersin; yüklenen kısım da seninle gelir, hiçbir şeyin yeniden indirilmesi gerekmez.
 
 Bunu yapabilmek için eklenti yüklenen videonun ikinci bir kopyasını kendi belleğinde tutar, bu yüzden bellek kullanımı neredeyse iki katına çıkabilir. Kopya da yalnızca RAM'de durur, diske dokunmaz ve bellek limitini aşmaz.
 
@@ -181,8 +210,8 @@ Videonun tamamı belleğe alındığında oynatıcının üstünde kısa bir bil
 **Debug modu** `kapalı`\
 Tarayıcı konsoluna ayrıntılı log yazar: DevTools'u aç, Console sekmesine geç ve `[ytbuffy]` ile başlayan satırlara bak. Bir şey çalışmadığında nedenini görmek ya da hata bildirmek için aç.
 
-**Tarayıcı video tampon sınırı (MB)** `150` ve **Tarayıcı ses tampon sınırı (MB)** `12`\
-Chrome'un bir oynatıcıya izin verdiği en fazla video ve ses tamponu. Bu değerleri yalnızca *Oynatıcı da daha fazlasını tutsun* kullanır. Chrome'u [aşağıda](#daha-büyük-bir-oynatıcı-tamponu) anlatılan bayraklarla başlatmıyorsan olduğu gibi bırak.
+**Tarayıcı video tampon sınırı (MB)** `150` ve **Tarayıcı ses tampon sınırı (MB)** `12`, Firefox'ta `20`\
+Tarayıcının bir oynatıcıya izin verdiği en fazla video ve ses tamponu. Bu değerleri yalnızca *Oynatıcı da daha fazlasını tutsun* kullanır. Tarayıcının sınırlarını [aşağıda](#daha-büyük-bir-oynatıcı-tamponu) anlatıldığı gibi yükseltmediysen olduğu gibi bırak.
 
 **Ayarları dışa aktar** ve **Ayarları içe aktar**\
 Tüm ayarlarını metin olarak kopyalayıp saklayabilir ya da başka bir bilgisayara taşıyabilir, sonra geri yapıştırabilirsin. Yapıştırdığın metinde olmayan ayarlar şimdiki değerlerini korur.
@@ -204,25 +233,44 @@ Bağlantı yokken sayfayı yenilediğinde video eklentinin kendi oynatıcısınd
 
 ### Daha büyük bir oynatıcı tamponu
 
-Chrome her oynatıcının tamponunu 150 MB video ve 12 MB ses ile sınırlar. Bellekten oynatma bundan etkilenmez, ama *Oynatıcı da daha fazlasını tutsun* etkilenir. Sınırları yükseltmek için Chrome tamamen kapalıyken onu şu bayraklarla başlat:
+Her oynatıcının tamponunu tarayıcı sınırlar: Chrome ve Chromium tabanlı diğer tarayıcılarda 150 MB video ve 12 MB ses, Firefox'ta 150 MB video ve 20 MB ses. Bellekten oynatma bundan etkilenmez, ama *Oynatıcı da daha fazlasını tutsun* etkilenir.
+
+**Chrome, Edge, Opera, Opera GX, Brave, Vivaldi ve Yandex Browser.** Tarayıcıyı tamamen kapat, sonra şu bayraklarla başlat:
+
+```
+--mse-video-buffer-size-limit-mb=1024 --mse-audio-buffer-size-limit-mb=96
+```
+
+Windows'ta program Chrome için `chrome.exe`, Edge için `msedge.exe`, Opera ve Opera GX için `opera.exe`, Brave için `brave.exe`, Vivaldi için `vivaldi.exe`, Yandex Browser için de `browser.exe`. Örneğin:
 
 ```
 chrome.exe --mse-video-buffer-size-limit-mb=1024 --mse-audio-buffer-size-limit-mb=96
 ```
 
-Sonra **Gelişmiş** bölümüne aynı değerleri gir.
+**Firefox.** `about:config` sayfasında `media.mediasource.eviction_threshold.video` ve `media.mediasource.eviction_threshold.audio` değerlerini ayarla. Değerler bayt cinsindendir: `1073741824` 1024 MB, `100663296` de 96 MB eder.
 
-### Bellek Tasarrufu
+Sonra **Gelişmiş** bölümüne aynı miktarları MB olarak gir.
 
-Chrome'un Bellek Tasarrufu özelliği arka plandaki bir sekmeyi kapatırsa o sekmenin kullandığı bellek de gider. Bunu önlemek için `chrome://settings/performance` sayfasında **Bu siteleri her zaman etkin tut** listesine `youtube.com` ekle.
+### Uykuya alınan sekmeler
+
+Tarayıcılar bellekten tasarruf etmek için arka plandaki sekmeleri uykuya alabilir. Uykuya alınan sekme yüklenen kısmı kaybeder, bu yüzden YouTube'u uyanık tut:
+
+- **Chrome:** `chrome://settings/performance` sayfasında **Her zaman etkin kalacak siteler** bölümündeki **Ekle**'ye tıkla ve `youtube.com` ekle.
+- **Edge:** `edge://settings/system/managePerformance` sayfasında **Bu siteleri her zaman etkin tut** satırındaki **Site ekle**'ye tıkla ve `youtube.com` ekle.
+- **Brave:** `brave://settings/system` sayfasında **Her zaman etkin kalacak siteler** bölümündeki **Ekle**'ye tıkla ve `youtube.com` ekle.
+- **Opera:** ayarlarda *uyku* diye ara ve **Hafızadan tasarruf etmek için etkin olmayan sekmeleri uyku moduna al** seçeneğini kapat.
+- **Opera GX:** aynısını yap, **Sistem bellek kullanımı yüksek olduğunda etkin olmayan sekmeleri uykuya al** seçeneğini de kapat. GX Control'deki RAM sınırlayıcıyı kullanıyorsan eklentinin bellek limitine yer bırak; yüklenen video da tarayıcının bellek kullanımına sayılır.
+- **Vivaldi:** bir sekmeyi uyku moduna almak onu bellekten çıkarır; izlediğin sekmeyi uyutma.
+- **Yandex Browser:** YouTube sekmeleri uykuya alınıyorsa `browser://settings/system` sayfasında **Kullanılmayan sekmeleri uyku moduna al** seçeneğini kapat.
+- **Firefox:** arka plandaki sekmeleri yalnızca bilgisayarın belleği azaldığında kapatır.
 
 ## Gizlilik
 
 - Video verisi yalnızca bellekte tutulur, diske asla yazılmaz.
 - YouTube dışında hiçbir yere hiçbir şey gönderilmez.
-- Ayarlar `chrome.storage.local` ile yalnızca bu bilgisayarda saklanır, eşitlenmez.
+- Ayarlar tarayıcının yerel eklenti deposunda tutulur, eşitlenmez.
 
-Eklenti üç izin ister: ayarların için `storage`, sayfa yenileme için tutulan kopya için `offscreen`, bağlantı yüzünden başarısız olan bir yenilemeyi fark etmek için de `webNavigation`.
+Chrome ve Chromium tabanlı diğer tarayıcılarda eklenti üç izin ister: ayarların için `storage`, sayfa yenileme için tutulan kopya için `offscreen`, bağlantı yüzünden başarısız olan bir yenilemeyi fark etmek için de `webNavigation`. Firefox'ta offscreen belgeleri olmadığı için orada `storage`, `webNavigation` ve `www.youtube.com` erişimi istenir; Firefox manifesti de eklentinin hiçbir veri toplamadığını bildirir.
 
 ## Sınırlar
 
@@ -230,26 +278,30 @@ Eklenti üç izin ister: ayarların için `storage`, sayfa yenileme için tutula
 - Bağlantı yokken başka bir videoya geçemezsin, çünkü YouTube bağlantı olmadan yeni sayfa açamaz.
 - Sayfa yenilendikten sonra açılan oynatıcı YouTube sayfası değildir; orada yorum, öneri ya da altyazı yoktur.
 - SABR belgelenmemiş bir protokoldür. YouTube onu değiştirirse eklenti güncellenene kadar çalışmayabilir.
-- Chrome 156 üzerinde geliştirildi ve test edildi.
+- Windows'ta Chrome 156, Edge 157, Firefox 159, Opera 139, Opera GX 139, Brave 1.99, Vivaldi 8.3 ve Yandex Browser 26.10 üzerinde test edildi.
 
 ## Geliştirme
 
 ```bash
-npm test        # birim ve akış testleri
-npm run build   # eklentiyi dist/ klasörüne derler
-npm run watch   # her değişiklikte yeniden derler
+npm test                  # birim ve akış testleri
+npm run build             # her tarayıcıyı dist/<tarayıcı> klasörüne derler
+npm run build -- firefox  # tek bir tarayıcıyı derler
+npm run watch -- chrome   # her değişiklikte tek bir tarayıcıyı yeniden derler
+npm run release           # her tarayıcıyı derler ve her birini release/ klasörüne ayrı zip'ler
 ```
 
 | Klasör | İçinde ne var |
 | --- | --- |
 | `src/page` | YouTube sayfasının içinde çalışan çekirdek: istek kancaları, SABR ve UMP çözümleme, bellekteki önbellek, önceden yükleme ve bellekten sunma |
 | `src/content` | Eklentiyle bağlantı ve oynatıcının üstündeki katmanlar |
-| `src/background` | Başarısız bir yenilemeden sonra oynatıcıyı açan service worker |
-| `src/vault` | Sayfa yenileme için kopyayı tutan offscreen belgesi |
+| `src/background` | `main.js`: başarısız bir yenilemeden sonra oynatıcıyı açan service worker; `firefox.js`: bunun Firefox karşılığı, sayfa yenileme kopyasını da o tutar |
+| `src/vault` | `main.js`: sayfa yenileme için kopyayı tutan offscreen belgesi; `firefox.js`: Firefox'un arka plan sayfası için aynı depo |
 | `src/replay` | Sayfa yenilendikten sonra açılan oynatıcı |
 | `src/popup`, `src/options` | Popup ve ayarlar sayfası |
 | `src/shared` | Ayarlar, iki dildeki arayüz metinleri ve birkaç ortak fonksiyon |
-| `static` | Manifest, HTML, CSS ve ikonlar |
+| `static` | Manifestler (Chromium tabanlı tarayıcılar için `manifest.json`, Firefox için `manifest.firefox.json`), HTML, CSS ve ikonlar |
+
+Derleme, `process.env.BROWSER` değerini derlediği tarayıcıya göre ayarlar. Chromium tabanlı derlemeler yalnızca birkaç ayar açıklamasındaki tarayıcı adıyla birbirinden ayrılır. Firefox derlemesi kendi manifestini, arka planını ve deposunu kullanır; sayfa da video verisini eklentiye base64 metin olarak gönderir, çünkü Firefox sayfanın belleğini eklentininkinden ayrı tutar.
 
 ## Lisans
 
