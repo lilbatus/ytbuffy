@@ -308,9 +308,71 @@ Derleme, `process.env.BROWSER` değerini derlediği tarayıcıya göre ayarlar. 
 YTBUFFY, [GNU Affero Genel Kamu Lisansı v3.0](LICENSE) ile yayımlanmaktadır.
 
 
-## Yasal Uyarı
+## Sorumluluk Reddi (Disclaimer)
 
-Bu yazılım, açık veya zımni herhangi bir garanti olmaksızın "olduğu gibi" sağlanmaktadır.
+**ÖNEMLİ: BU YAZILIMI İNDİRMEDEN, DERLEMEDEN, KURMADAN VEYA KULLANMADAN ÖNCE LÜTFEN DİKKATLİCE OKUYUN.**
+
+Bu yazılım (**YTBUFFY**), açık, zımni, yasal veya başka türlü hiçbir garanti, beyan veya koşul olmaksızın, tüm kusurlarıyla birlikte kesinlikle **"OLDUĞU GİBİ" ("AS IS")** ve **"MEVCUT OLDUĞU ŞEKLİYLE" ("AS AVAILABLE")** sunulmaktadır. Yürürlükteki yasaların izin verdiği azami ölçüde; yazar(lar), geliştirici(ler)/sürdürücü(ler) ve katkıda bulunanlar; **ticari elverişlilik**, **belirli bir amaca uygunluk**, **mülkiyet hakkı**, **müdahalesiz kullanım**, **hak ihlali bulunmaması**, **doğruluk**, **eksiksizlik**, **güvenilirlik**, **güvenlik** ve **kesintisiz veya hatasız çalışma** dahil ancak bunlarla sınırlı olmamak üzere tüm zımni garantileri ve koşulları açıkça reddeder.
+
+Yazar(lar), geliştirici(ler) veya katkıda bulunanlar tarafından verilen hiçbir sözlü veya yazılı bilgi, dokümantasyon, README açıklaması veya tavsiye; herhangi bir garanti oluşturmaz ve yürürlükteki yasalar kapsamında hariç tutulamayan sorumlulukların kapsamını genişletmez.
+
+
+### Projenin Amacı ve Teknik Kapsam
+YTBUFFY; kararsız, kesintili veya kopan ağ bağlantıları sırasında istemci taraflı (client-side) medya önbellekleme/tamponlama davranışını incelemek amacıyla oluşturulmuş bağımsız ve deneysel bir tarayıcı uzantısıdır. Bir kullanıcı kısa süreli veya tekrarlayan bağlantı kesintileri yaşadığında standart oynatıcı önbellekleri hızla tükenebilir; bu proje, bağlantı dalgalandığında halihazırda yüklenmiş kısımların oynatılmasının daha az kesintiye uğraması için aktif bir oturum sırasında önceden istenen medya parçalarının geçici tarayıcı belleğinde (RAM) nasıl tutulabileceğini araştırmaktadır.
+
+Bu proje; yazılım mühendisliği merakı, kişisel deneyler ve tarayıcı uzantı API'leri, medya kaynağı tamponlama (Media Source Buffering) ve akış protokolleri (SABR/UMP gibi) üzerine teknik araştırma amacıyla geliştirilmiştir. Ticari bir hizmet, yönetilen bir platform, kurumsal bir ürün, korsanlık aracı, erişim engeli aşma aracı veya toplu dağıtım sistemi olarak **sunulmamaktadır**.
+
+### Üçüncü Taraflarla Bağlantı, Onay veya İlişki Bulunmaması
+Yazar(lar)ın, geliştirici(ler)in veya katkıda bulunanların; **YouTube**, **Google LLC**, **Alphabet Inc.**, herhangi bir tarayıcı sağlayıcısı (Google, Microsoft, Mozilla, Opera, Brave, Vivaldi veya Yandex dahil) veya bunların bağlı kuruluşları, iştirakleri, lisans verenleri ya da iş ortakları ile hiçbir bağlantısı, ortaklığı, temsilciliği, ortak girişimi, istihdam ilişkisi, sponsorluğu, onayı, sertifikasyonu veya yetkilendirmesi bulunmamaktadır.
+
+Bu depoda veya dokümantasyonda adı geçen tüm ürün adları, ticari markalar, hizmet markaları, ticari unvanlar, logolar ve şirket adları ilgili sahiplerinin mülkiyetindedir. Üçüncü taraf platformlardan, tarayıcılardan, protokollerden veya araçlardan bahsedilmesi yalnızca teknik tanımlama, uyumluluk bağlamı veya birlikte çalışabilirlik açıklaması içindir ve sahipleri tarafından onaylandığı ya da onlarla bir ilişki bulunduğu anlamına **gelmez**.
+
+### Telif Hakkı, Fikri Mülkiyet ve İçerik Lisansı Verilmemesi
+Yazar(lar), geliştirici(ler) ve katkıda bulunanlar; YouTube gibi üçüncü taraf hizmetler aracılığıyla erişilen, yüklenen, tamponlanan veya oynatılan hiçbir video, ses akışı, altyazı, küçük resim (thumbnail), üst veri (metadata), medya varlığı, web sayfası veya platform materyali üzerinde herhangi bir mülkiyet, telif hakkı, ticari marka, veritabanı hakkı veya fikri mülkiyet hakkı **iddia etmemektedir**.
+
+Üçüncü taraf medya içeriklerindeki tüm telif hakları, bağlantılı haklar, icra hakları, lisanslar ve diğer fikri mülkiyet hakları münhasıran ilgili içerik üreticilerine, hak sahiplerine, lisans verenlere ve platform operatörlerine aittir. **Bu depodaki veya kaynak kodundaki hiçbir şey; telif hakkıyla korunan veya korumalı herhangi bir eseri indirme, kopyalama, sökme (rip), arşivleme, kalıcı olarak depolama, yeniden dağıtma, yayınlama, kamuya iletme, gelir elde etme veya başka bir şekilde istismar etme konusunda hiçbir lisans, izin veya hak vermez, devretmez, bunlardan feragat etmez ve bunları ima etmez.**
+
+### Korumaları Aşmama Amacı ve İçerik Üreticileri ile Platformlara Saygı
+Bu proje; ödeme duvarlarını aşmak, erişim kontrollerini devre dışı bırakmak, teknik koruma önlemlerini atlatmak, hesap yetkilerini değiştirmek, abonelikleri taklit etmek, izinsiz reklam eklemek, analitik/telemetri verilerini engellemek veya manipüle etmek ya da içerik üreticilerinin, platformların, reklamverenlerin veya hak sahiplerinin meşru gelirlerine, reklam sistemlerine, sponsorluklarına veya iş modellerine zarar vermek üzere tasarlanmamıştır ve bu amacı taşımaz.
+
+İçerik üreticileri eserlerini ortaya koymak için ciddi zaman, emek ve kaynak harcamakta; platformlar ise kendi teknik mimarileri ve kuralları çerçevesinde faaliyet göstermektedir. Bu yazılımın üçüncü taraf Hizmet Şartlarını, platform kurallarını, hız sınırlarını (rate limits), sözleşmeden doğan yükümlülükleri veya yürürlükteki yasaları ihlal edecek şekilde kötüye kullanılması kesinlikle bu projenin amacının dışındadır ve sorumluluğu tamamen kullanıcıya aittir.
+
+### Geçici Bellek Davranışı, Sunucu Bulunmaması ve Kalıcı Depolama İddiası Olmaması
+Dokümantasyonda açıklandığı üzere YTBUFFY; yazar(lar) tarafından işletilen harici arka uç sunucuları, aktarma vekilleri (relay proxy) veya bulut depolama alanları olmaksızın, aktif bir oturum sırasında geçici bellek (RAM) kullanarak kullanıcının tarayıcı ortamında yerel olarak çalışır. Proje, uzantının kendi mantığı aracılığıyla kalıcı medya dosyaları yazmak yerine medya parçalarını geçici bellekte tutacak şekilde tasarlanmış olsa da; belirli bir tarayıcının, işletim sisteminin, uzantı çalışma zamanının, sayfa yenileme işleyicisinin, bellek ayırıcısının, takas dosyasının (swap file), hazırda bekletme (hibernation) durumunun, çökme dökümünün (crash dump) veya üçüncü taraf bir aracın uygulamada belleği nasıl yönettiği, disk sayfalarına yazdığı, önbelleğe aldığı veya temizlediği konusunda **hiçbir teknik garanti veya teminat verilmemektedir**.
+
+Belirli bir makinede veya işletim sisteminde mutlak gizlilik, hassas medya işleme, yasal düzenlemelere tabi veri kontrolleri veya kalıcı olmama garantisi gerektiren kullanıcılar; tarayıcılarında herhangi bir üçüncü taraf veya açık kaynak kodu çalıştırmanın kendi gereksinimlerini karşılayıp karşılamadığını değerlendirmekten münhasıran sorumludur.
+
+### Protokol Değişiklikleri, İşlev Kaybı ve Uyumluluk Riskleri
+Akış protokolleri, web oynatıcı iç yapıları, tarayıcı uzantı API'leri ve güvenlik politikaları sık sık ve çoğu zaman önceden bildirilmeksizin değişmektedir. Akış formatları ve belgelenmemiş veya gelişmekte olan davranışlar (SABR/UMP gibi) üçüncü taraflarca tek taraflı olarak değiştirilebileceğinden, YTBUFFY herhangi bir zamanda bozulabilir, hatalı çalışabilir, durabilir, tamponlanmış verileri kaybedebilir, farklı tarayıcı sürümlerinde veya işletim sistemlerinde tutarsız davranabilir ya da tamamen işlevsiz hale gelebilir.
+
+Yazar(lar)ın, geliştirici(ler)in ve katkıda bulunanların bu yazılımı sürdürme, güncelleme, yama yayınlama, destek sağlama, hatalarını giderme veya herhangi bir tarayıcı, işletim sistemi ya da üçüncü taraf web sitesi ile sürekli uyumluluğunu garanti etme konusunda **hiçbir yükümlülüğü yoktur**.
+
+### Kullanıcının Tek Başına Sorumluluğu ve Yasal Uyumluluk
+Bu yazılımı indirerek, klonlayarak, derleyerek, değiştirerek, kurarak, etkinleştirerek veya kullanarak; eylemlerinizin ve bunların sonuçlarının **tek ve tam sorumluluğunu üstlenmiş olursunuz**.
+
+YTBUFFY kullanımınızın bulunduğunuz yargı yetkisi alanında ve geçerli sözleşmeler kapsamında yasal ve izin verilebilir olup olmadığını belirlemekten münhasıran siz sorumlusunuz; buna aşağıdakiler dahildir:
+- Yerel, ulusal ve uluslararası telif hakkı, fikri mülkiyet, bilişim suçları ve veri koruma yasaları;
+- Üçüncü taraf Hizmet Şartları, Kabul Edilebilir Kullanım Politikaları ve platform kuralları (YouTube Hizmet Şartları ve tarayıcı mağazası/uzantı politikaları dahil);
+- Tarayıcının kullanıldığı kurumsal, iş yeri, okul veya ağ politikaları; ve
+- Cihazınızdaki veri kullanımı, bant genişliği kotaları, pil/ısınma etkisi ve sistem bellek sınırları.
+
+Bu yazılımı kullanmanız yürürlükteki yasalar veya uymakla yükümlü olduğunuz kurallar tarafından yasaklanmışsa, yazılımı indirmemeli, kurmamalı ve kullanmamalısınız.
+
+### Sorumluluk Sınırlaması ve Tazminat
+Yürürlükteki yasaların izin verdiği en geniş ölçüde; yazar(lar), geliştirici(ler) veya katkıda bulunanlar hiçbir durumda size veya herhangi bir üçüncü tarafa karşı; sözleşme, haksız fiil, ihmal, kusursuz sorumluluk, yasal görev veya başka bir hukuki teoriye dayanıp dayanmadığına bakılmaksızın ve bu tür zararların olasılığı bildirilmiş, biliniyor veya bilinmesi gerekmiş olsa dahi, bu yazılıma erişim, indirme, derleme, değiştirme, kurulum, çalıştırma, performans, arıza veya yazılımı kullanamamadan kaynaklanan ya da bunlarla herhangi bir şekilde bağlantılı olan aşağıdakiler dahil ancak bunlarla sınırlı olmamak üzere hiçbir **doğrudan, dolaylı, arızi, özel, netice kabilinden doğan, emsal niteliğindeki veya cezai zarardan** ya da herhangi bir türdeki kayıp veya hasardan sorumlu tutulamaz:
+- Kâr, gelir, iş, sözleşme veya beklenen tasarruf kaybı;
+- Reklam, sponsorluk, içerik üreticisi veya ticari gelir kaybı;
+- Veri veya oturum durumunun kaybı, bozulması, ifşa olması veya kalıcı olmaması;
+- Üçüncü taraflarca uygulanan hesap uyarıları, kısıtlamalar, askıya almalar, yasaklamalar veya IP/ağ engellemeleri;
+- Aşırı internet veri kullanımı, kotalı bant genişliği ücretleri, donanım yıpranması, sistem yavaşlamaları, tarayıcı çökmeleri veya sekme/bellek tükenmesi; veya
+- İtibar ya da şerefiye kaybı.
+
+Yürürlükteki yasaların belirli garanti veya sorumlulukların hariç tutulmasına ya da sınırlandırılmasına izin vermediği durumlarda, yazar(lar)ın, geliştirici(ler)in ve katkıda bulunanların sorumluluğu **yasaların izin verdiği en dar asgari ölçü ile** sınırlandırılacaktır.
+
+Yasaların izin verdiği ölçüde; bu yazılımı kötüye kullanmanızdan, herhangi bir yasayı, üçüncü taraf hakkını veya şartını ihlal etmenizden ya da kodu değiştirmenizden veya yeniden dağıtmanızdan kaynaklanan veya bunlarla ilgili olan her türlü iddia, talep, dava, yargılama, yükümlülük, zarar, kayıp, para cezası, yaptırım, masraf ve harcamaya (makul avukatlık ücretleri dahil) karşı yazar(lar)ı, geliştirici(ler)i ve katkıda bulunanları savunmayı, tazmin etmeyi ve zarar görmemelerini sağlamayı kabul edersiniz.
+
+### Açık Kaynak Lisans İlişkisi
+Bu sorumluluk reddi metni; garanti reddi ve sorumluluk sınırlamalarının ilgili lisansta ve yürürlükteki yasalarda izin verildiği ölçüde geçerli olması kaydıyla, bu deponun dağıtıldığı açık kaynak lisansının (**GNU Affero Genel Kamu Lisansı v3.0** gibi) şartlarını tamamlar; bunları değiştirmez veya bunların yerine geçmez. Bu sorumluluk reddi beyanının herhangi bir hükmünün yürürlükteki yasalar uyarınca geçersiz veya uygulanamaz sayılması halinde, kalan hükümler tam olarak yürürlükte kalmaya devam edecektir.
 - **Eğitim ve Araştırma Amaçlı Kullanım:** Bu proje yalnızca eğitim, kişisel deney ve tarayıcı eklentisi mimarisini anlamak amacıyla tasarlanmıştır.
 - **Uyumluluk:** Yayıncı; üçüncü taraf hizmet şartlarının, platform yönergelerinin veya telif hakkı politikalarının ihlal edilmesini onaylamaz veya teşvik etmez. Kullanıcılar, bu yazılımı kendi kullanım biçimlerinden tamamen sorumludur.
 - **Sorumluluk Sınırlandırması:** Hiçbir koşulda yayıncı, bu yazılımın kullanımından veya dağıtımından kaynaklanan herhangi bir hak iddia, zarar veya yükümlülükten sorumlu tutulamaz.
