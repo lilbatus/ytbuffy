@@ -309,8 +309,68 @@ YTBUFFY is released under the [GNU Affero General Public License v3.0](LICENSE).
 
 
 ## Disclaimer
+**IMPORTANT — PLEASE READ CAREFULLY BEFORE DOWNLOADING, BUILDING, INSTALLING, OR USING THIS SOFTWARE.**
 
-This software is provided "as is", without warranty of any kind, express or implied.
-- **Educational & Research Use:** This project is intended solely for educational purposes, personal experimentation, and understanding browser extension architecture.
-- **Compliance:** The author does not endorse or encourage any violation of third-party terms of service, platform guidelines, or copyright policies. Users are entirely responsible for their own use of this software.
-- **Limitation of Liability:** In no event shall the author be held liable for any claims, damages, or liabilities arising from the use or distribution of this software.
+This software (**YTBUFFY**) is provided strictly **"AS IS"** and **"AS AVAILABLE"**, with all faults and without warranties, representations, or conditions of any kind, whether express, implied, statutory, or otherwise. To the maximum extent permitted by applicable law, the author(s), maintainer(s), and contributor(s) expressly disclaim all implied warranties and conditions, including, without limitation, any implied warranties of **merchantability**, **fitness for a particular purpose**, **title**, **quiet enjoyment**, **non-infringement**, **accuracy**, **completeness**, **reliability**, **security**, and **uninterrupted or error-free operation**.
+
+No oral or written information, documentation, README statement, or advice given by the author(s), maintainer(s), or contributor(s) shall create any warranty or expand the scope of any liability that cannot be excluded under applicable law.
+
+
+### Purpose of the Project and Technical Scope
+YTBUFFY is an independent, experimental browser extension created to explore client-side media buffering behavior during unstable, intermittent, or dropping network connections. When a user experiences brief or recurring network interruptions, standard player lookahead buffers may run out quickly; this project investigates how volatile browser memory (RAM) can retain already-requested media segments during an active session so playback of already-loaded portions is less disrupted when connectivity fluctuates.
+
+This project is developed out of software engineering curiosity, personal experimentation, and technical study of browser extension APIs, media source buffering, and streaming protocols (such as SABR/UMP). It is **not** offered as a commercial service, managed platform, enterprise product, piracy utility, circumvention tool, or mass-distribution system.
+
+### No Affiliation, Endorsement, or Relationship with Third Parties
+Neither the author(s), maintainer(s), nor contributor(s) have any affiliation, association, partnership, agency, joint venture, employment, sponsorship, endorsement, certification, or authorization from **YouTube**, **Google LLC**, **Alphabet Inc.**, any browser vendor (including Google, Microsoft, Mozilla, Opera, Brave, Vivaldi, or Yandex), or any of their respective subsidiaries, affiliates, licensors, or partners.
+
+All product names, trademarks, service marks, trade names, logos, and company names mentioned in this repository or documentation are the property of their respective owners. Any mention of third-party platforms, browsers, protocols, or tools is strictly for technical identification, compatibility context, or interoperability description and does **not** imply any endorsement by or relationship with their owners.
+
+### Copyright, Intellectual Property, and No License to Content
+The author(s), maintainer(s), and contributor(s) claim **no** ownership, copyright, trademark, database right, or intellectual property interest in any video, audio stream, caption, thumbnail, metadata, media asset, webpage, or platform material accessed, loaded, buffered, or played through third-party services such as YouTube.
+
+All copyrights, neighboring rights, performance rights, licenses, and other intellectual property rights in third-party media content remain exclusively with their respective creators, rightsholders, licensors, and platform operators. **Nothing in this repository or its source code grants, conveys, waives, or implies any license, permission, or right to download, copy, rip, archive, store permanently, redistribute, broadcast, publicly perform, monetize, or otherwise exploit any copyrighted or protected work.**
+
+### Intended Non-Circumvention and Respect for Creators and Platforms
+This project is not designed or intended to bypass paywalls, defeat access controls, circumvent technical protection measures, alter account entitlements, spoof subscriptions, inject unauthorized advertisements, block or manipulate analytics/telemetry, or harm the legitimate revenue, ad systems, sponsorships, or business models of creators, platforms, advertisers, or rights holders.
+
+Creators invest substantial time, skill, and resources into producing their work, and platforms operate under their own technical architectures and terms. Any misuse of this software to violate third-party Terms of Service, platform rules, rate limits, contractual obligations, or applicable laws is strictly outside the intended purpose of this project and is solely the responsibility of the user.
+
+### Volatile Memory Behavior, No Servers, and No Permanent Storage Claims
+As described in the documentation, YTBUFFY operates locally within the user's browser environment during an active session using volatile memory (RAM), without external backend servers, relay proxies, or cloud storage operated by the author(s). While the project is designed to keep media segments in volatile memory rather than writing permanent media files via the extension's own logic, **no technical guarantee or warranty is made** regarding how a specific browser, operating system, extension runtime, page reload handler, memory allocator, swap file, hibernation state, crash dump, or third-party tool manages, pages, caches, or clears memory in practice.
+
+Users who require strict confidentiality, sensitive media handling, regulated data controls, or guaranteed non-persistence on a given machine or operating system are solely responsible for evaluating whether running any third-party or open-source code in their browser meets their requirements.
+
+### Protocol Changes, Breakage, and Compatibility Risks
+Streaming protocols, web player internals, browser extension APIs, and security policies change frequently and often without notice. Because streaming formats and undocumented or evolving behaviors (such as SABR/UMP) are subject to unilateral modification by third parties, YTBUFFY may break, malfunction, stall, lose buffered data, behave inconsistently across browser versions or operating systems, or become completely non-functional at any time.
+
+The author(s), maintainer(s), and contributor(s) have **no obligation** to maintain, update, patch, support, fix bugs in, or guarantee ongoing compatibility of this software with any browser, operating system, or third-party website.
+
+### Sole User Responsibility and Legal Compliance
+By downloading, cloning, compiling, modifying, installing, enabling, or using this software, **you assume sole and complete responsibility** for your actions and their consequences.
+
+You are solely responsible for determining whether your use of YTBUFFY is lawful and permitted in your jurisdiction and under any applicable agreements, including:
+- Local, national, and international copyright, intellectual property, computer misuse, and data protection laws;
+- Third-party Terms of Service, Acceptable Use Policies, and platform rules (including YouTube's Terms of Service and browser store/extension policies);
+- Organizational, workplace, school, or network policies where the browser is used; and
+- Data usage, bandwidth caps, battery/thermal impact, and system memory limits on your device.
+
+If your use of this software is prohibited by applicable law or by rules you are bound to follow, you must not download, install, or use it.
+
+### Comprehensive Limitation of Liability and Indemnification
+To the fullest extent permitted by applicable law, in no event shall the author(s), maintainer(s), or contributor(s) be liable to you or any third party for any **direct, indirect, incidental, special, consequential, exemplary, or punitive damages**, or for any loss or damage of any kind, including, without limitation:
+- Loss of profits, revenue, business, contracts, or anticipated savings;
+- Loss of advertising, sponsorship, creator, or commercial income;
+- Loss, corruption, exposure, or non-persistence of data or session state;
+- Account warnings, restrictions, suspensions, bans, or IP/network blocks imposed by third parties;
+- Excess internet data usage, metered bandwidth charges, hardware wear, system slowdowns, browser crashes, or tab/memory exhaustion; or
+- Damage to goodwill or reputation,
+
+arising out of or relating in any way to the access, download, build, modification, installation, execution, performance, malfunction, or inability to use this software—even if the author(s), maintainer(s), or contributor(s) have been advised of, knew of, or should have known of the possibility of such damages, and regardless of the legal theory (contract, tort, negligence, strict liability, statutory duty, or otherwise).
+
+Where applicable law does not allow the exclusion or limitation of certain warranties or liabilities, the liability of the author(s), maintainer(s), and contributor(s) shall be limited to the **strictest minimum extent permitted by law**.
+
+To the extent permitted by law, you agree to defend, indemnify, and hold harmless the author(s), maintainer(s), and contributor(s) from and against any claims, demands, actions, proceedings, liabilities, damages, losses, fines, penalties, costs, and expenses (including reasonable legal fees) arising out of or related to your misuse of this software, your violation of any law or third-party right or terms, or your modification or redistribution of the code.
+
+### Open-Source License Relationship
+This disclaimer supplements—and does not modify or supersede—the terms of the applicable open-source license under which this repository is distributed (such as the **GNU Affero General Public License v3.0**), except to the extent that disclaimers of warranty and limitations of liability are permitted therein and under governing law. If any provision of this disclaimer is held invalid or unenforceable under applicable law, the remaining provisions shall continue in full force and effect.
