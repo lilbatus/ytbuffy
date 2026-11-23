@@ -309,7 +309,7 @@ YTBUFFY is released under the [GNU Affero General Public License v3.0](LICENSE).
 
 
 ## Disclaimer
-**IMPORTANT — PLEASE READ CAREFULLY BEFORE DOWNLOADING, BUILDING, INSTALLING, OR USING THIS SOFTWARE.**
+**IMPORTANT: PLEASE READ CAREFULLY BEFORE DOWNLOADING, BUILDING, INSTALLING, OR USING THIS SOFTWARE.**
 
 This software (**YTBUFFY**) is provided strictly **"AS IS"** and **"AS AVAILABLE"**, with all faults and without warranties, representations, or conditions of any kind, whether express, implied, statutory, or otherwise. To the maximum extent permitted by applicable law, the author(s), maintainer(s), and contributor(s) expressly disclaim all implied warranties and conditions, including, without limitation, any implied warranties of **merchantability**, **fitness for a particular purpose**, **title**, **quiet enjoyment**, **non-infringement**, **accuracy**, **completeness**, **reliability**, **security**, and **uninterrupted or error-free operation**.
 
