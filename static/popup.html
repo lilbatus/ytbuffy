@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>YTBUFFY</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<header>
+  <h1 data-i18n="extName"></h1>
+  <label class="switch">
+    <input type="checkbox" id="enabled">
+    <span></span>
+  </label>
+</header>
+<p id="state" class="state"></p>
+<section id="video" hidden>
+  <div class="row">
+    <span class="muted" data-i18n="popupCached"></span>
+    <span id="cached"></span>
+  </div>
+  <div class="bar"><div id="cachedBar"></div></div>
+  <div class="row">
+    <span class="muted" data-i18n="popupMemory"></span>
+    <span id="memory"></span>
+  </div>
+  <div class="row" id="nextRow" hidden>
+    <span class="muted" data-i18n="popupNext"></span>
+    <span id="next"></span>
+  </div>
+</section>
+<footer>
+  <button id="action" class="primary"></button>
+  <button id="settings" data-i18n="popupSettings"></button>
+</footer>
+<script src="popup.js"></script>
+</body>
+</html>
